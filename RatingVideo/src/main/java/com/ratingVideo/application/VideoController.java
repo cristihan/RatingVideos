@@ -9,6 +9,7 @@ import com.ratingVideo.domain.Itinerario;
 import com.ratingVideo.domain.Rating;
 import com.ratingVideo.domain.Video;
 import com.ratingVideo.persistence.ItinerarioRepository;
+import com.ratingVideo.persistence.RatingRepository;
 import com.ratingVideo.persistence.VideoRepository;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
@@ -18,6 +19,8 @@ public class VideoController {
 private VideoRepository videoRepository;
 
 private ItinerarioRepository itinerarioRepository;
+
+private RatingRepository ratingRepository;
 	
 	public VideoDTO createVideo(int itinerarioId, VideoDTO videoDto) throws InvalidParamException, NotFoundException {
 		Itinerario itinerario = itinerarioRepository.getItinerarioById(itinerarioId);
@@ -34,7 +37,7 @@ private ItinerarioRepository itinerarioRepository;
 		Video video = videoRepository.getVideoById(videoId);
 		Rating rating = new Rating(ratingDto);
 		video.addRating(rating);
-		videoRepository.saveRating(rating);
+		ratingRepository.saveRating(rating);
 		videoRepository.saveVideo(video);
 		
 		return new RatingDTO(rating);

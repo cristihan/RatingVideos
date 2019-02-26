@@ -1,16 +1,24 @@
 package com.ratingVideo.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.web.server.ServerWebInputException;
 
 import com.ratingVideo.applicationDTO.ItinerarioDTO;
 import com.ratingVideo.utilities.InvalidParamException;
 
 public class Itinerario {
 	
-	private Integer itinerarioId;
+	private String itinerarioId;
 	private String nameItinerario;
 	private List<Video> allVideos = new ArrayList<Video>();
+	
+	public static final String BE = "BE";
+    public static final String FE = "FE";
+    public static final String AD = "AD";
+    public static final List<String> ALLITINERARIOS = Arrays.asList(BE, FE, AD);
 	
 	public Itinerario() {
 		
@@ -24,8 +32,15 @@ public class Itinerario {
 		this.nameItinerario = itinerarioDto.getNameItinerario();
 	}
 	
+	public void allItinerarios(String itinerarioId) {
+		if(ALLITINERARIOS.contains(itinerarioId))
+			this.itinerarioId = itinerarioId;
+		else new ServerWebInputException("Wrong Itinerary code");
+		
+	}
+	
 
-	public Integer getItinerarioId() {
+	public String getItinerarioId() {
 		return itinerarioId;
 	}
 

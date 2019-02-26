@@ -10,7 +10,7 @@ import com.ratingVideo.utilities.NotFoundException;
 
 public class ItinerarioDTO {
 	
-	private int itinerarioId;
+	private String itinerarioId;
 	private String nameItinerario;
 	private List<VideoDTO> allVideos = new ArrayList<VideoDTO>();
 	
@@ -37,7 +37,7 @@ public class ItinerarioDTO {
 		
 	}
 
-	public int getItinerarioId() {
+	public String getItinerarioId() {
 		return itinerarioId;
 	}
 

@@ -3,7 +3,7 @@ package com.ratingVideo.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ratingVideo.domain.Rating;
+//import com.ratingVideo.domain.Rating;
 import com.ratingVideo.domain.Video;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
@@ -11,7 +11,7 @@ import com.ratingVideo.utilities.NotFoundException;
 public class VideoRepository {
 	
 	private HelperVideoRepository repository;
-	private static List<Rating> ratings = new ArrayList<>();
+//	private static List<Rating> ratings = new ArrayList<>();
 
 	public void saveVideo(Video video) throws InvalidParamException {
 		if (video == null)
@@ -25,11 +25,11 @@ public class VideoRepository {
 	}
 	
 	
-	public void saveRating(Rating rating) throws InvalidParamException {
-		if (rating == null)
-			throw new InvalidParamException();
-		ratings.add(rating);
-	}
+//	public void saveRating(Rating rating) throws InvalidParamException {
+//		if (rating == null)
+//			throw new InvalidParamException();
+//		ratings.add(rating);
+//	}
 	
 	
 
