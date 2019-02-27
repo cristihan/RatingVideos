@@ -14,6 +14,7 @@ import com.ratingVideo.applicationDTO.RatingDTO;
 import com.ratingVideo.applicationDTO.VideoDTO;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
+import com.ratingVideo.utilities.WrongItineraryException;
 
 public class VideoRestController {
 	
@@ -27,7 +28,7 @@ public class VideoRestController {
 
 	// POST: /Videos : crea un Video
 	@PostMapping(value = "/videos", produces = "application/json;charset=UTF-8")
-	public String createVideo(@PathVariable int itinerarioId, @RequestBody String jVideo) throws InvalidParamException, NotFoundException {
+	public String createVideo(@PathVariable String itinerarioId, @RequestBody String jVideo) throws InvalidParamException, NotFoundException, WrongItineraryException {
 		VideoDTO newVideo = new Gson().fromJson(jVideo, VideoDTO.class);
 		VideoDTO video = controller.createVideo(itinerarioId, newVideo);
 		return toJson(video);
@@ -42,8 +43,8 @@ public class VideoRestController {
 
 	// GET /Videos/: retorna el llistat de tots els videos del sistema 	
 	@GetMapping(value = "/videos", produces = "application/json;charset=UTF-8")
-	public String getListVideo() throws NotFoundException, InvalidParamException {
-		List<VideoDTO> video = controller.getAllVideos();
+	public String getListVideo(@PathVariable String itineratioId) throws NotFoundException, InvalidParamException {
+		List<VideoDTO> video = controller.getAllVideos(itineratioId);
 		return toJson(video);
 	}
 

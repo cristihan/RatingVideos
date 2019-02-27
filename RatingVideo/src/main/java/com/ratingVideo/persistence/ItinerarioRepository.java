@@ -33,7 +33,7 @@ public class ItinerarioRepository {
 	}
 
 	public Itinerario getItinerarioById(int itinerarioId) throws NotFoundException {
-		try {
+		try {			
 			return repository.findById(itinerarioId).get();
 		} catch (Exception exception) {
 			throw new NotFoundException();

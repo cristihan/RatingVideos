@@ -3,6 +3,8 @@ package com.ratingVideo.application;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.server.ServerWebInputException;
+
 import com.ratingVideo.applicationDTO.RatingDTO;
 import com.ratingVideo.applicationDTO.VideoDTO;
 import com.ratingVideo.domain.Itinerario;
@@ -13,6 +15,7 @@ import com.ratingVideo.persistence.RatingRepository;
 import com.ratingVideo.persistence.VideoRepository;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
+import com.ratingVideo.utilities.WrongItineraryException;
 
 public class VideoController {
 	
@@ -21,9 +24,14 @@ private VideoRepository videoRepository;
 private ItinerarioRepository itinerarioRepository;
 
 private RatingRepository ratingRepository;
+
+private ItinerarioController controller;
 	
-	public VideoDTO createVideo(int itinerarioId, VideoDTO videoDto) throws InvalidParamException, NotFoundException {
-		Itinerario itinerario = itinerarioRepository.getItinerarioById(itinerarioId);
+	public VideoDTO createVideo(String itinerarioId, VideoDTO videoDto) throws InvalidParamException, NotFoundException, WrongItineraryException {
+		Itinerario itinerario = controller.getAllItinerarioId(itinerarioId);
+
+		//containItinerario(itinerarioId);
+		//Itinerario itinerario = itinerarioRepository.getItinerarioById(itinerarioId);
 		Video video = new Video(videoDto);
 		itinerario.addVideo(video);
 		videoRepository.saveVideo(video);
@@ -44,9 +52,10 @@ private RatingRepository ratingRepository;
 	}
 	
 	
-	public List<VideoDTO> getAllVideos() throws NotFoundException, InvalidParamException  {
+	public List<VideoDTO> getAllVideos(String itinerarioId) throws NotFoundException, InvalidParamException  {
 		List<VideoDTO> videoDTOList = new ArrayList<>();
-		List<Video> videoList = videoRepository.getAllVideos();
+		
+		List<Video> videoList = videoRepository.getAllVideos(itinerarioId);
 		
 		if (videoList.isEmpty())
 			throw new NotFoundException();
@@ -57,6 +66,8 @@ private RatingRepository ratingRepository;
 
 		return videoDTOList;
 	}
+	
+	
 	
 	Video getVideoId(int videoId) throws NotFoundException  {
 		Video video = videoRepository.getVideoById(videoId);

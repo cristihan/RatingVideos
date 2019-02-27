@@ -33,9 +33,9 @@ public class VideoRepository {
 	
 	
 
-	public List<Video> getAllVideos() {
+	public List<Video> getAllVideos(String itinerarioId) {
 		List<Video> result = new ArrayList<>();
-		for (Video v : repository.findAll()) {
+		for (Video v : repository.findByItineraryCode(itinerarioId)) {
 			result.add(v);
 		}
 		return result;
