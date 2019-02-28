@@ -3,15 +3,20 @@ package com.ratingVideo.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 //import com.ratingVideo.domain.Rating;
 import com.ratingVideo.domain.Video;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
 
+@Repository
 public class VideoRepository {
 	
+	@Autowired
 	private HelperVideoRepository repository;
-//	private static List<Rating> ratings = new ArrayList<>();
+
 
 	public void saveVideo(Video video) throws InvalidParamException {
 		if (video == null)
@@ -24,18 +29,10 @@ public class VideoRepository {
 
 	}
 	
-	
-//	public void saveRating(Rating rating) throws InvalidParamException {
-//		if (rating == null)
-//			throw new InvalidParamException();
-//		ratings.add(rating);
-//	}
-	
-	
 
-	public List<Video> getAllVideos(String itinerarioId) {
+	public List<Video> getAllVideos() {
 		List<Video> result = new ArrayList<>();
-		for (Video v : repository.findByItineraryCode(itinerarioId)) {
+		for (Video v : repository.findAll()) {
 			result.add(v);
 		}
 		return result;

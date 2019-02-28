@@ -2,10 +2,13 @@ package com.ratingVideo.api;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,9 +16,13 @@ import com.ratingVideo.application.ItinerarioController;
 import com.ratingVideo.applicationDTO.ItinerarioDTO;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
+import com.ratingVideo.utilities.WrongItineraryException;
 
+@RestController
+@CrossOrigin
 public class ItinerarioRestController {
 
+	@Autowired
 	private ItinerarioController controller;
 
 	private String toJson(Object object) {
@@ -26,9 +33,9 @@ public class ItinerarioRestController {
 
 	// POST: /itinerarios : crea un itinerario
 	@PostMapping(value = "/itinerarios", produces = "application/json;charset=UTF-8")
-	public String createItinerari(@RequestBody String jItinerario) throws InvalidParamException, NotFoundException {
+	public String createItinerari(@PathVariable String itineraryId, @RequestBody String jItinerario) throws InvalidParamException, NotFoundException, WrongItineraryException {
 		ItinerarioDTO newItinerario = new Gson().fromJson(jItinerario, ItinerarioDTO.class);
-		ItinerarioDTO itinerario = controller.createItinerario(newItinerario);
+		ItinerarioDTO itinerario = controller.createItinerario(itineraryId);
 		return toJson(itinerario);
 	}
 

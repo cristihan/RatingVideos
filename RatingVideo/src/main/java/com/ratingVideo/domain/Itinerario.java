@@ -4,19 +4,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 import com.ratingVideo.applicationDTO.ItinerarioDTO;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.WrongItineraryException;
 
+@Entity(name = "Itinerario")
 public class Itinerario {
 
+	@Id
+	@Column(name = "itinerario_Id")
 	private String itinerarioId;
-	private String nameItinerario;
-	private List<Video> allVideos = new ArrayList<Video>();
+	@Column(name = "name_Itinerario")
+	private String nameItinerario;	
 
 	public static final String BE = "BE";
 	public static final String FE = "FE";
 	public static final String AD = "AD";
+	@Transient
 	public static final List<String> ALLITINERARIOS = Arrays.asList(BE, FE, AD);
 
 	public Itinerario() {
@@ -46,16 +61,6 @@ public class Itinerario {
 		return nameItinerario;
 	}
 
-	public List<Video> getAllVideos() {
-		return allVideos;
-	}
-
-	public void addVideo(Video video) {
-		this.allVideos.add(video);
-	}
-
-	public void deleteVideo() {
-		this.allVideos = new ArrayList<Video>();
-	}
+	
 
 }

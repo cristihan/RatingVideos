@@ -1,13 +1,21 @@
 package com.ratingVideo.applicationDTO;
 
+import com.google.gson.annotations.Expose;
+import com.ratingVideo.domain.Itinerario;
 import com.ratingVideo.domain.Rating;
+import com.ratingVideo.domain.Video;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
 
 public class RatingDTO {
 	
+	@Expose
 	private int valoracion;
+	@Expose
 	private String comentario;
+	
+	@Expose
+	private Video video;
 	
 	public RatingDTO() {
 		

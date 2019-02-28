@@ -3,6 +3,9 @@ package com.ratingVideo.application;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import com.ratingVideo.applicationDTO.ItinerarioDTO;
 import com.ratingVideo.domain.Itinerario;
 import com.ratingVideo.persistence.ItinerarioRepository;
@@ -10,14 +13,20 @@ import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
 import com.ratingVideo.utilities.WrongItineraryException;
 
+@Controller
 public class ItinerarioController {
 	
+	@Autowired
 	private ItinerarioRepository itinerarioRepository;
 	
-	public ItinerarioDTO createItinerario(ItinerarioDTO itinerarioDto) throws InvalidParamException, NotFoundException {
-		Itinerario itinerario = new Itinerario(itinerarioDto);
-	
-		itinerarioRepository.saveItinerario(itinerario);		
+	public ItinerarioDTO createItinerario(String itinerarioId) throws WrongItineraryException, NotFoundException, InvalidParamException {
+		Itinerario itinerario = itinerarioRepository.getItinerarioById(itinerarioId);		
+		if (itinerario == null)
+			throw new WrongItineraryException();
+		itinerario = new Itinerario();
+		itinerario.containItinerario(itinerarioId);
+		itinerarioRepository.saveItinerario(itinerario);
+
 		return new ItinerarioDTO(itinerario);
 	}
 	

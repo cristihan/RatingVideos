@@ -3,7 +3,9 @@ package com.ratingVideo.application;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.web.server.ServerWebInputException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 
 import com.ratingVideo.applicationDTO.RatingDTO;
 import com.ratingVideo.applicationDTO.VideoDTO;
@@ -17,46 +19,49 @@ import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
 import com.ratingVideo.utilities.WrongItineraryException;
 
+@Controller
 public class VideoController {
-	
-private VideoRepository videoRepository;
 
-private ItinerarioRepository itinerarioRepository;
+	@Autowired
+	private VideoRepository videoRepository;
 
-private RatingRepository ratingRepository;
+	@Autowired
+	private ItinerarioRepository itinerarioRepository;
 
-private ItinerarioController controller;
-	
-	public VideoDTO createVideo(String itinerarioId, VideoDTO videoDto) throws InvalidParamException, NotFoundException, WrongItineraryException {
+	@Autowired
+	private RatingRepository ratingRepository;
+
+	@Autowired
+	private ItinerarioController controller;
+
+	public VideoDTO createVideo(String itinerarioId, VideoDTO videoDto)
+			throws InvalidParamException, NotFoundException, WrongItineraryException {
 		Itinerario itinerario = controller.getAllItinerarioId(itinerarioId);
-
-		//containItinerario(itinerarioId);
-		//Itinerario itinerario = itinerarioRepository.getItinerarioById(itinerarioId);
+		// containItinerario(itinerarioId);
+		// Itinerario itinerario = itinerarioRepository.getItinerarioById(itinerarioId);
 		Video video = new Video(videoDto);
-		itinerario.addVideo(video);
+		//itinerario.addVideo(video);
 		videoRepository.saveVideo(video);
 		itinerarioRepository.saveItinerario(itinerario);
-		
+
 		return new VideoDTO(video);
 	}
-	
-	
+
 	public RatingDTO createRating(int videoId, RatingDTO ratingDto) throws InvalidParamException, NotFoundException {
 		Video video = videoRepository.getVideoById(videoId);
 		Rating rating = new Rating(ratingDto);
-		video.addRating(rating);
+		//video.addRating(rating);
 		ratingRepository.saveRating(rating);
 		videoRepository.saveVideo(video);
-		
+
 		return new RatingDTO(rating);
 	}
-	
-	
-	public List<VideoDTO> getAllVideos(String itinerarioId) throws NotFoundException, InvalidParamException  {
+
+	public List<VideoDTO> getAllVideos() throws NotFoundException, InvalidParamException {
 		List<VideoDTO> videoDTOList = new ArrayList<>();
-		
-		List<Video> videoList = videoRepository.getAllVideos(itinerarioId);
-		
+
+		List<Video> videoList = videoRepository.getAllVideos();
+
 		if (videoList.isEmpty())
 			throw new NotFoundException();
 
@@ -66,10 +71,8 @@ private ItinerarioController controller;
 
 		return videoDTOList;
 	}
-	
-	
-	
-	Video getVideoId(int videoId) throws NotFoundException  {
+
+	Video getVideoId(int videoId) throws NotFoundException {
 		Video video = videoRepository.getVideoById(videoId);
 		return video;
 	}

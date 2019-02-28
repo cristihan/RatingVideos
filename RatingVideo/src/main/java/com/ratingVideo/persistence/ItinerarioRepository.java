@@ -4,13 +4,17 @@ package com.ratingVideo.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ratingVideo.domain.Itinerario;
 import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
 
+@Repository
 public class ItinerarioRepository {
 
+	@Autowired
 	private HelperItinerarioRepository repository;
 
 	public void saveItinerario(Itinerario itinerario) throws InvalidParamException {
@@ -32,7 +36,7 @@ public class ItinerarioRepository {
 		return result;
 	}
 
-	public Itinerario getItinerarioById(int itinerarioId) throws NotFoundException {
+	public Itinerario getItinerarioById(String itinerarioId) throws NotFoundException {
 		try {			
 			return repository.findById(itinerarioId).get();
 		} catch (Exception exception) {

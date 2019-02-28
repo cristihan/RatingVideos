@@ -2,10 +2,13 @@ package com.ratingVideo.api;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,8 +19,11 @@ import com.ratingVideo.utilities.InvalidParamException;
 import com.ratingVideo.utilities.NotFoundException;
 import com.ratingVideo.utilities.WrongItineraryException;
 
+@RestController
+@CrossOrigin
 public class VideoRestController {
 	
+	@Autowired
 	private VideoController controller;
 
 	private String toJson(Object object) {
@@ -43,8 +49,8 @@ public class VideoRestController {
 
 	// GET /Videos/: retorna el llistat de tots els videos del sistema 	
 	@GetMapping(value = "/videos", produces = "application/json;charset=UTF-8")
-	public String getListVideo(@PathVariable String itineratioId) throws NotFoundException, InvalidParamException {
-		List<VideoDTO> video = controller.getAllVideos(itineratioId);
+	public String getListVideo() throws NotFoundException, InvalidParamException {
+		List<VideoDTO> video = controller.getAllVideos();
 		return toJson(video);
 	}
 
